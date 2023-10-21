@@ -8,27 +8,16 @@ from typing import List, Dict
 
 
 class Server:
+    """Server class to paginate a database of popular baby names.
     """
-    Server class to paginate a database of popular baby names
-    """
-
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """
-        Initialize the Server object with dataset
-        and indexed dataset attributes
-        """
         self.__dataset = None
         self.__indexed_dataset = None
 
     def dataset(self) -> List[List]:
-        """
-        Retrieve and cache the dataset from a CSV file,
-        skipping the header row
-
-        Returns:
-            List[List]: The cached dataset as a list of lists
+        """Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -39,12 +28,7 @@ class Server:
         return self.__dataset
 
     def indexed_dataset(self) -> Dict[int, List]:
-        """
-        Create an indexed dataset starting from position 0
-
-        Returns:
-            Dict[int, List]: The indexed dataset as a dictionary
-            with sorting positions as keys
+        """Dataset indexed by sorting position, starting at 0
         """
         if self.__indexed_dataset is None:
             dataset = self.dataset()
@@ -54,41 +38,26 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None,
-                        page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        Get a hypermedia index for pagination
-
-        Args:
-            index (int): The current start index of the return page
-            Defaults to None
-            page_size (int): The size of the current page. Defaults to 10
-
-        Returns:
-            Dict: A dictionary with key-value pairs
-            (index, next_index, page_size, data)
+        Returns a dictionary with key-value pairs
+         (index, next_index, page_size, data)
+        :param index:
+        :param page_size:
+        :return:
         """
-        # Check if index and page_size are integers
         assert type(index) == int
         assert type(page_size) == int
-
-        # Get the indexed dataset and its size
         csv = self.indexed_dataset()
         csv_size = len(csv)
-
-        # Check if the index is in a valid range
         assert 0 <= index < csv_size
-
-        data = []  # Store the data for the current page
-        _next = index  # Initialize the next index
-
-        # Iterate to fetch data for the current page
+        data = []
+        _next = index
         for _ in range(page_size):
             while not csv.get(_next):
                 _next += 1
             data.append(csv.get(_next))
             _next += 1
-
         return {
             "index": index,
             "data": data,
