@@ -61,8 +61,7 @@ class Server:
 
         Args:
             index (int): The current start index of the return page
-            Defaults to None
-            page_size (int): The size of the current page. Defaults to 10
+            page_size (int): The size of the current page
 
         Returns:
             Dict: A dictionary with key-value pairs
