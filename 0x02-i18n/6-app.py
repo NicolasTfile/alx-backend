@@ -46,6 +46,7 @@ def before_request():
     g.user = get_user(request.args.get("login_as"))
 
 
+@babel.locale_selector
 def get_locale():
     """
     get_locale function
@@ -64,7 +65,7 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-babel.init_app(app, locale_selector=get_locale)
+# babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)

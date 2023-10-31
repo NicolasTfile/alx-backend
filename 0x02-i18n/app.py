@@ -50,6 +50,7 @@ def before_request():
     g.time = format_datetime(datetime.now())
 
 
+@babel.locale_selector
 def get_locale():
     """
     get_locale function
@@ -68,9 +69,10 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-babel.init_app(app, locale_selector=get_locale)
+# babel.init_app(app, locale_selector=get_locale)
 
 
+@babel.timezone_selector
 def get_timezone():
     """
     get_timezone function
@@ -85,7 +87,7 @@ def get_timezone():
     return tz
 
 
-babel.init_app(app, timezone_selector=get_timezone)
+# babel.init_app(app, timezone_selector=get_timezone)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
