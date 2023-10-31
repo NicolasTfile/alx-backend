@@ -21,7 +21,7 @@ class Config:
 app.config.from_object(Config)
 
 
-@babel.locale_selector
+@babel.localeselector
 def get_locale():
     """
      detect if the incoming request contains locale

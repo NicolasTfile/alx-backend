@@ -50,7 +50,7 @@ def before_request():
     g.time = format_datetime(datetime.now())
 
 
-@babel.locale_selector
+@babel.localeselector
 def get_locale():
     """
     get_locale function
@@ -72,7 +72,7 @@ def get_locale():
 # babel.init_app(app, locale_selector=get_locale)
 
 
-@babel.timezone_selector
+@babel.timezoneselector
 def get_timezone():
     """
     get_timezone function
